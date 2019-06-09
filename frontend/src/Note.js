@@ -1,11 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 
 export default class Note extends  React.Component {
-    constructor(props) {
-        super(props);
-
-    }
+    // constructor(props) {
+    //     super(props);
+    //
+    // }
 
     // componentDidMount() {
     //     axios.get('http://localhost:3000')
@@ -20,7 +19,6 @@ export default class Note extends  React.Component {
     render() {
         return (
             <ul className="list-group"> {this.props.notes.map(note => <li className="list-group-item" key={note.id}> {note.notetext}</li>)} </ul>
-            // <ul className="list-group"> {this.state.notes.map(note => <li className="list-group-item" key={note.id}> {note.notetext}</li>)} </ul>
         );
     }
 }

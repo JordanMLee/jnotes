@@ -30,12 +30,11 @@ const getNotes = (request, response) => {
 // post a new note
 const createNote = (request, response) => {
     const { title, noteText } = request.body;
-
     pool.query('INSERT INTO notes (title, noteText) VALUES ($1, $2)', [title, noteText], (error, results) => {
         if (error) {
             throw error
         }
-        response.status(201).send(`Note has been added with ID: ${results.insertId}`)
+        response.status(201).send(`${request.body} added to database`)
 
     })
 };
