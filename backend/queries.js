@@ -39,8 +39,20 @@ const createNote = (request, response) => {
     })
 };
 
+// delete a note
+const deleteNote = (request, response) => {
+    const id = parseInt(request.params.id);
+    pool.query('DELETE FROM notes WHERE id = $1', [id], (error, results) => {
+        if(error) {
+            throw error
+        }
+        response.status(200).send(`Note ${id} deleted`)
+    })
+};
+
 module.exports= {
     getUsers,
     getNotes,
     createNote,
+    deleteNote,
 };

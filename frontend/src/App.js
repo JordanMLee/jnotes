@@ -14,8 +14,8 @@ export default class App extends React.Component {
         };
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:4000')
+   async componentDidMount() {
+        await axios.get('http://localhost:4000')
             .then(response => {
                 this.setState({notes: response.data});
             })
@@ -24,12 +24,25 @@ export default class App extends React.Component {
             });
     }
 
+    updateNotes = async () => {
+        await axios.get('http://localhost:4000')
+            .then(response => {
+                this.setState({notes: response.data});
+            })
+            .catch(error => {
+                console.log(`Error... ${error}`);
+            });
+    };
+
     addNote = (event) => {
 
         axios.post('http://localhost:4000', `title=${this.state.title}&noteText=${this.state.noteText}`)
             .then(() => {
                 alert("Success!");
-                return (<div className="alert alert-dark" role="alert"> This is a dark alert—check it out!</div>);
+                this.updateNotes();
+
+                // return (<div className="alert alert-dark" role="alert"> This is a dark alert—check it out!</div>);
+                // this.setState({notes});
             });
         event.preventDefault();
     };
@@ -38,6 +51,12 @@ export default class App extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+    };
+
+
+    deleteNote = (event) => {
+        axios.delete( 'http://localhost:4000/2');
+
     };
 
 
@@ -52,6 +71,7 @@ export default class App extends React.Component {
                            onChange={event => this.updateNote(event)}/>
                     <input type="submit" value="+" className="btn btn-primary"/>
                 </form>
+                <br/>
                 <Note notes={this.state.notes}/>
             </div>
         );
