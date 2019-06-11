@@ -38,7 +38,7 @@ export default class App extends React.Component {
 
         axios.post('http://localhost:4000', `title=${this.state.title}&noteText=${this.state.noteText}`)
             .then(() => {
-                alert("Success!");
+                // alert("Success!");
                 this.updateNotes();
 
                 // return (<div className="alert alert-dark" role="alert"> This is a dark alert—check it out!</div>);
@@ -54,9 +54,21 @@ export default class App extends React.Component {
     };
 
 
-    deleteNote = (event) => {
-        axios.delete( 'http://localhost:4000/2');
+    deleteNote = (note) => {
+        const url = `http://localhost:4000/${note.id}`;
 
+        axios
+            .delete(url)
+            .then(res => {
+                this.setState(previousState => {
+                    return {
+                        notes: previousState.notes.filter( n => n.id !== note.id)
+                    };
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
 
@@ -65,14 +77,14 @@ export default class App extends React.Component {
 
             <div className="App">
                 <form onSubmit={this.addNote}>
-                    <input name="title" type="text" placeholder="title"
-                           onChange={event => this.updateNote(event)}/>
+                    {/*<input name="title" type="text" placeholder="title"*/}
+                    {/*       onChange={event => this.updateNote(event)}/>*/}
                     <input name="noteText" type="text" placeholder="new note"
                            onChange={event => this.updateNote(event)}/>
                     <input type="submit" value="+" className="btn btn-primary"/>
                 </form>
                 <br/>
-                <Note notes={this.state.notes}/>
+                <Note notes={this.state.notes} deleteClick={this.deleteNote}/>
             </div>
         );
     }
