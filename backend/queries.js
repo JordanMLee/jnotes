@@ -50,9 +50,26 @@ const deleteNote = (request, response) => {
     })
 };
 
+
+// edit a note
+const editNote = (request, response) => {
+  const id = parseInt(request.params.id);
+  const {title, noteText } = request.body;
+  pool.query(
+      'UPDATE notes SET title = $1, noteText=$2 WHERE id =$3', [title,noteText,id],
+      (error, results) => {
+          if (error) {
+              throw error
+          }
+          response.status(200).send(`note ${id} modified`)
+      }
+  )
+};
 module.exports= {
     getUsers,
     getNotes,
     createNote,
     deleteNote,
+
+    editNote,
 };

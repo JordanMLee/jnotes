@@ -42,6 +42,9 @@ app.post('/', db.createNote);
 
 app.delete('/:id', db.deleteNote);
 
+// edit note
+app.put('/:id', db.editNote);
+
 app.listen(port, ()=> {
     console.log(`App running on port ${port}`);
 });

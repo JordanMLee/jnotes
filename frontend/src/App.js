@@ -38,11 +38,8 @@ export default class App extends React.Component {
 
         axios.post('http://localhost:4000', `title=${this.state.title}&noteText=${this.state.noteText}`)
             .then(() => {
-                // alert("Success!");
                 this.updateNotes();
 
-                // return (<div className="alert alert-dark" role="alert"> This is a dark alert—check it out!</div>);
-                // this.setState({notes});
             });
         event.preventDefault();
     };
@@ -71,6 +68,15 @@ export default class App extends React.Component {
             });
     };
 
+    editNote =(note) => {
+        const url = `http://localhost:4000/${note.id}`;
+        axios
+            .put(url, {title: this.state.title, noteText: this.state.noteText})
+            .then(()=> {
+                this.updateNotes();
+            });
+    };
+
 
     render() {
         return (
@@ -84,7 +90,7 @@ export default class App extends React.Component {
                     <input type="submit" value="+" className="btn btn-primary"/>
                 </form>
                 <br/>
-                <Note notes={this.state.notes} deleteClick={this.deleteNote}/>
+                <Note notes={this.state.notes} deleteClick={this.deleteNote} editClick={this.editNote}/>
             </div>
         );
     }
