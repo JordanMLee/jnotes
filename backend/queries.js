@@ -1,8 +1,8 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
-    database: 'jnotes',
+    host: 'jnotesdb01.cbkrs8dtmtem.us-east-1.rds.amazonaws.com',
+    database: 'jnotesdb',
     password: 'password',
     port: 5432,
 });

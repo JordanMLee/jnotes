@@ -14,7 +14,7 @@ export default class App extends React.Component {
         };
     }
 
-   async componentDidMount() {
+    async componentDidMount() {
         await axios.get('http://localhost:4000')
             .then(response => {
                 this.setState({notes: response.data});
@@ -59,7 +59,7 @@ export default class App extends React.Component {
             .then(res => {
                 this.setState(previousState => {
                     return {
-                        notes: previousState.notes.filter( n => n.id !== note.id)
+                        notes: previousState.notes.filter(n => n.id !== note.id)
                     };
                 });
             })
@@ -68,13 +68,20 @@ export default class App extends React.Component {
             });
     };
 
-    editNote =(note) => {
+    editNote = (note) => {
         const url = `http://localhost:4000/${note.id}`;
         axios
             .put(url, {title: this.state.title, noteText: this.state.noteText})
-            .then(()=> {
+            .then(() => {
                 this.updateNotes();
             });
+    };
+
+    clearInput = () => {
+        //reset state
+        this.setState({noteText:''});
+        //reset ui
+        document.getElementById("sdf").value = "";
     };
 
 
@@ -85,11 +92,13 @@ export default class App extends React.Component {
                 <form onSubmit={this.addNote}>
                     {/*<input name="title" type="text" placeholder="title"*/}
                     {/*       onChange={event => this.updateNote(event)}/>*/}
-                    <input name="noteText" type="text" placeholder="new note"
-                           onChange={event => this.updateNote(event)}/>
-                    <input type="submit" value="+" className="btn btn-primary"/>
+                    <div className="input-group">
+                        <input type="submit" value="+" className="btn btn-primary"/>
+                        <input className="form-control width100" name="noteText" id="sdf" type="text" placeholder="new note"
+                               onChange={event => this.updateNote(event)}/>
+                        {/*<button onClick={this.clearInput} value="-" className="btn btn-primary">-</button>*/}
+                    </div>
                 </form>
-                <br/>
                 <Note notes={this.state.notes} deleteClick={this.deleteNote} editClick={this.editNote}/>
             </div>
         );
