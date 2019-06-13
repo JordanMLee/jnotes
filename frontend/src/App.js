@@ -15,7 +15,7 @@ export default class App extends React.Component {
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:4000')
+        await axios.get('localhost:4000')
             .then(response => {
                 this.setState({notes: response.data});
             })
@@ -25,7 +25,7 @@ export default class App extends React.Component {
     }
 
     updateNotes = async () => {
-        await axios.get('http://localhost:4000')
+        await axios.get('localhost:4000')
             .then(response => {
                 this.setState({notes: response.data});
             })
@@ -36,7 +36,7 @@ export default class App extends React.Component {
 
     addNote = (event) => {
 
-        axios.post('http://localhost:4000', `title=${this.state.title}&noteText=${this.state.noteText}`)
+        axios.post('localhost:4000', `title=${this.state.title}&noteText=${this.state.noteText}`)
             .then(() => {
                 this.updateNotes();
 
@@ -52,7 +52,7 @@ export default class App extends React.Component {
 
 
     deleteNote = (note) => {
-        const url = `http://localhost:4000/${note.id}`;
+        const url = `localhost:4000/${note.id}`;
 
         axios
             .delete(url)
@@ -69,7 +69,7 @@ export default class App extends React.Component {
     };
 
     editNote = (note) => {
-        const url = `http://localhost:4000/${note.id}`;
+        const url = `localhost:4000/${note.id}`;
         axios
             .put(url, {title: this.state.title, noteText: this.state.noteText})
             .then(() => {
